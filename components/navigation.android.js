@@ -15,11 +15,9 @@ import {
 } from 'react-native-tab-view';
 
 
-import {
-  Posts
-} from './posts.android.js';
-
-let self = null
+import { Posts } from './posts.android.js';
+import { Toolbar } from './toolbar.android.js';
+import { NavigatorService } from '../services/navigator.service.android.js';
 
 export class Navigation extends Component {
   state = {
@@ -27,35 +25,13 @@ export class Navigation extends Component {
     routes: [
       { key: '1', title: 'Notícias' },
       { key: '2', title: 'Últimas Partidas' }
-    ],
-    screens: [
-      { title: 'First Scene',  index: 1 },
-      { title: 'Second Scene', index: 2 }
     ]
   }
 
   constructor(props){
     super(props);
-    self = this
   }
 
-  _onActionSelected(position) {
-    console.log(self, self.navigator)
-    switch (position) {
-      case 0:
-        self.navigator.jumpTo(self.state.screens[0])
-        break;
-      case 1:
-        try{
-          self.navigator.jumpTo(self.state.screens[1])
-        } catch(e){
-          self.navigator.push(self.state.screens[1])
-        }
-        break;
-      default:
-
-    }
-  }
 
   _handleChangeTab = (index) => {
     this.setState({ index });
@@ -66,9 +42,9 @@ export class Navigation extends Component {
   };
 
   _renderScene = (route, navigator)=>{
-    this.navigator = navigator
-
-    if (route.index){
+    NavigatorService.instance.setNavigator(navigator)
+    
+    if(route.index){
       switch (route.index) {
       case 1:
         return (
@@ -107,17 +83,8 @@ export class Navigation extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <Icon.ToolbarAndroid
-          style={styles.toolbar}
-          title="Ceará Esporte Fã"
-          titleColor="white"
-          actions={[
-            { title: 'Início', show: 'never' },
-            { title: 'Sobre', show: 'never' }
-          ]}
-          onActionSelected={this._onActionSelected}
-        />
-        <Navigator initialRoute={this.state.screens[0]} renderScene={this._renderScene}/>
+        <Toolbar navigator={this.state.navigator} screens={this.state.screens}></Toolbar>
+        <Navigator initialRoute={NavigatorService.instance.screens[0]} renderScene={this._renderScene}/>
       </View>
     );
   };
@@ -131,13 +98,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  toolbar:{
-    flex:1,
-    color: '#ECEFF1',
-    backgroundColor: '#37474F',
-    maxHeight: 50,
-    paddingLeft: 30
   },
   bar:{
     backgroundColor: '#37474F'
