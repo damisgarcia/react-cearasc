@@ -6,8 +6,8 @@ export class NavigatorService extends Singleton{
     super();
     this.navigator = null
     this.screens = [
-      { title: 'First Scene',  index: 1 },
-      { title: 'Second Scene', index: 2 }
+      { title: 'Home Page',  index: 1 },
+      { title: 'About', index: 2 }
     ]
   }
 

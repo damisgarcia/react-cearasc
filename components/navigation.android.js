@@ -15,8 +15,9 @@ import {
 } from 'react-native-tab-view';
 
 
+import { About } from './pages.android.js';
 import { Posts } from './posts.android.js';
-import { Toolbar } from './toolbar.android.js';
+import { MyToolbar } from './mytoolbar.android.js';
 import { NavigatorService } from '../services/navigator.service.android.js';
 
 export class Navigation extends Component {
@@ -43,12 +44,13 @@ export class Navigation extends Component {
 
   _renderScene = (route, navigator)=>{
     NavigatorService.instance.setNavigator(navigator)
-    
+
     if(route.index){
       switch (route.index) {
       case 1:
         return (
           <View style={styles.container}>
+            <MyToolbar/>
             <TabViewAnimated
               style={styles.container}
               navigationState={this.state}
@@ -60,7 +62,7 @@ export class Navigation extends Component {
         );
         break;
       case 2:
-        return <Text style={styles.container}>Lorem 1</Text>
+        return <About style={[styles.container, styles.bar]}/>
       default:
         return null;
       }
@@ -83,7 +85,6 @@ export class Navigation extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <Toolbar navigator={this.state.navigator} screens={this.state.screens}></Toolbar>
         <Navigator initialRoute={NavigatorService.instance.screens[0]} renderScene={this._renderScene}/>
       </View>
     );

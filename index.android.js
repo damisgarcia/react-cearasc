@@ -7,11 +7,10 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  Navigator,
-  Text,
-  View
+  StyleSheet
 } from 'react-native';
+
+import { COLOR, ThemeProvider } from 'react-native-material-ui';
 
 import {
   Navigation
@@ -20,9 +19,9 @@ import {
 export default class react_cearasc extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <ThemeProvider uiTheme={uiTheme}>
         <Navigation></Navigation>
-      </View>
+      </ThemeProvider>
     );
   }
 
@@ -36,6 +35,17 @@ export default class react_cearasc extends Component {
     }
   }
 }
+
+const uiTheme = {
+  palette: {
+      primaryColor: COLOR.bluegrey500,
+  },
+  toolbar: {
+    container: {
+      height: 50
+    }
+  },
+};
 
 const styles = StyleSheet.create({
   container: {
