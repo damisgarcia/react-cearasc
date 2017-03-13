@@ -9,7 +9,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { Toolbar } from 'react-native-material-ui';
+import { Toolbar, COLOR } from 'react-native-material-ui';
 
 import { NavigatorService } from '../services/navigator.service.android.js';
 
@@ -23,8 +23,8 @@ export class MyToolbar extends Component {
     super(props);
   }
 
-  _onActionSelected(position) {
-    switch (position) {
+  _onActionSelected(action) {
+    switch (action.index) {
       case 0:
         NavigatorService.instance.getNavigator().jumpTo(NavigatorService.instance.screens[HOME])
         break;
@@ -43,8 +43,9 @@ export class MyToolbar extends Component {
     return (
       <View style={styles.toolbar}>
          <Toolbar
+          style={styles.toolbar}
           centerElement="Ceará Esporte Fã"
-          onRightElementPress={(e) => console.error(e)}
+          onRightElementPress={this._onActionSelected}
           rightElement={{
 	          menu: {
               labels: ['Início', 'Sobre']
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
   toolbar:{
     flex:1,
     color: 'white',
-    backgroundColor: '#37474F',
     maxHeight: 50,
     paddingLeft: 0
   }

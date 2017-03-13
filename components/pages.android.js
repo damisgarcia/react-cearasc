@@ -9,9 +9,12 @@ import {
   View
 } from 'react-native';
 
+import { Layout } from '../services/layout.service.android.js';
 import { NavigatorService } from '../services/navigator.service.android.js';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import { COLOR } from 'react-native-material-ui';
 
 export class About extends Component {
   _toHome(){
@@ -24,13 +27,13 @@ export class About extends Component {
     };
 
     return(
-      <View style={{flex:1, backgroundColor: '#333333'}}>
+      <View style={{flex:1, backgroundColor: COLOR.blueGrey900}}>
         <View style={styles.icon_container}>
           <TouchableHighlight onPress={this._toHome}>
             <Icon name="md-arrow-back" color="white" size={30}/>
           </TouchableHighlight>
         </View>
-        <View style={styles.container}>
+        <View style={[styles.container, {flex: 2}]}>
           <Image source={pic} style={{width: 100, height: 100}}/>
           <Text style={styles.subtitle}>Um aplicativo feito por alvinegros para alvinegros.</Text>
         </View>
@@ -59,7 +62,10 @@ const styles = StyleSheet.create({
   },
   subtitle:{
     flex: 1,
-    color:'white',
-    alignItems: 'center'
+    width: Layout.getScreenWidth() * 0.5,
+    textAlign: 'center',
+    alignItems: 'center',
+    marginTop: Layout.getScreenWidth() * 0.05,
+    color:COLOR.blueGrey50
   }
 })

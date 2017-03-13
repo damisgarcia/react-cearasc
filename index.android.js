@@ -38,7 +38,7 @@ export default class react_cearasc extends Component {
 
 const uiTheme = {
   palette: {
-      primaryColor: COLOR.bluegrey500,
+      primaryColor: COLOR.blueGrey800,
   },
   toolbar: {
     container: {

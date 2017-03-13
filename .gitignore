@@ -22,6 +22,8 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+android/build.gradle
+
 # Android/IntelliJ
 #
 build/
