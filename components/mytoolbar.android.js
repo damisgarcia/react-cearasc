@@ -43,7 +43,6 @@ export class MyToolbar extends Component {
     return (
       <View style={styles.toolbar}>
          <Toolbar
-          style={styles.toolbar}
           centerElement="Ceará Esporte Fã"
           onRightElementPress={this._onActionSelected}
           rightElement={{
@@ -60,7 +59,6 @@ export class MyToolbar extends Component {
 const styles = StyleSheet.create({
   toolbar:{
     flex:1,
-    color: 'white',
     maxHeight: 50,
     paddingLeft: 0
   }

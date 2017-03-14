@@ -17,6 +17,7 @@ import {
 
 import { About } from './pages.android.js';
 import { Posts } from './posts.android.js';
+import { PostShow } from './post.android.js';
 import { MyToolbar } from './mytoolbar.android.js';
 import { NavigatorService } from '../services/navigator.service.android.js';
 
@@ -63,6 +64,8 @@ export class Navigation extends Component {
         break;
       case 2:
         return <About style={[styles.container, styles.bar]}/>
+      case 3:
+        return <PostShow data={route}/>
       default:
         return null;
       }
@@ -75,8 +78,6 @@ export class Navigation extends Component {
       return <Posts style={[ styles.page, { backgroundColor: '#ff4081' } ]} />;
     case '2':
       return <View style={[ styles.page, { backgroundColor: '#673ab7' } ]} />;
-    case '3':
-      return <View style={[ styles.page, { backgroundColor: '#683ab7' } ]} />;
     default:
       return null;
     }

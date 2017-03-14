@@ -6,8 +6,9 @@ export class NavigatorService extends Singleton{
     super();
     this.navigator = null
     this.screens = [
-      { title: 'Home Page',  index: 1 },
-      { title: 'About', index: 2 }
+      { title: 'Posts',  index: 1 },
+      { title: 'About', index: 2 },
+      { title: 'Post Detail', index: 3 }
     ]
   }
 

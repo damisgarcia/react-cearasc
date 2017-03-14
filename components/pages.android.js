@@ -27,7 +27,7 @@ export class About extends Component {
     };
 
     return(
-      <View style={{flex:1, backgroundColor: COLOR.blueGrey900}}>
+      <View style={{flex:1, backgroundColor: "black"}}>
         <View style={styles.icon_container}>
           <TouchableHighlight onPress={this._toHome}>
             <Icon name="md-arrow-back" color="white" size={30}/>
