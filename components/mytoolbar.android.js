@@ -12,12 +12,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Toolbar, COLOR } from 'react-native-material-ui';
 
 import { NavigatorService } from '../services/navigator.service.android.js';
-
-const HOME = 0
-const ABOUT = 1
+import { Routes } from '../services/routes.js';
 
 export class MyToolbar extends Component {
-  state = { modes: HOME }
+  state = { modes: Routes.HOME }
 
   constructor(props){
     super(props);
@@ -26,13 +24,13 @@ export class MyToolbar extends Component {
   _onActionSelected(action) {
     switch (action.index) {
       case 0:
-        NavigatorService.instance.getNavigator().jumpTo(NavigatorService.instance.screens[HOME])
+        NavigatorService.instance.getNavigator().jumpTo(NavigatorService.instance.screens[Routes.HOME])
         break;
       case 1:
         try{
-          NavigatorService.instance.getNavigator().jumpTo(NavigatorService.instance.screens[ABOUT])
+          NavigatorService.instance.getNavigator().jumpTo(NavigatorService.instance.screens[Routes.ABOUT])
         } catch(e){
-          NavigatorService.instance.getNavigator().push(NavigatorService.instance.screens[ABOUT])
+          NavigatorService.instance.getNavigator().push(NavigatorService.instance.screens[Routes.ABOUT])
         }
         break;
       default:

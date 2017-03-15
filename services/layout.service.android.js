@@ -12,6 +12,8 @@ export class Layout extends Singleton{
     super();
   }
 
+  static backgroundColor = '#f4f4f4'
+
   static getScreenWidth(){
     return Dimensions.get('window').width;
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
+  StatusBar,
   Navigator,
   Text,
   View
@@ -14,11 +15,13 @@ import {
   TabBar
 } from 'react-native-tab-view';
 
+import { COLOR } from 'react-native-material-ui';
 
-import { About } from './pages.android.js';
+import { About, Calendar } from './pages.android.js';
 import { Posts } from './posts.android.js';
 import { PostShow } from './post.android.js';
 import { MyToolbar } from './mytoolbar.android.js';
+import { Routes } from '../services/routes.js';
 import { NavigatorService } from '../services/navigator.service.android.js';
 
 export class Navigation extends Component {
@@ -51,6 +54,7 @@ export class Navigation extends Component {
       case 1:
         return (
           <View style={styles.container}>
+            <StatusBar backgroundColor={COLOR.grey900} barStyle="light-content"/>
             <MyToolbar/>
             <TabViewAnimated
               style={styles.container}
@@ -61,9 +65,8 @@ export class Navigation extends Component {
             />
           </View>
         );
-        break;
       case 2:
-        return <About style={[styles.container, styles.bar]}/>
+        return <About/>
       case 3:
         return <PostShow data={route}/>
       default:
@@ -77,7 +80,7 @@ export class Navigation extends Component {
     case '1':
       return <Posts style={[ styles.page, { backgroundColor: '#ff4081' } ]} />;
     case '2':
-      return <View style={[ styles.page, { backgroundColor: '#673ab7' } ]} />;
+      return <Calendar style={styles.page} />;
     default:
       return null;
     }
@@ -86,7 +89,7 @@ export class Navigation extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <Navigator initialRoute={NavigatorService.instance.screens[0]} renderScene={this._renderScene}/>
+        <Navigator initialRoute={NavigatorService.instance.screens[Routes.HOME]} renderScene={this._renderScene}/>
       </View>
     );
   };
