@@ -24,9 +24,6 @@ export class MyToolbar extends Component {
   _onActionSelected(action) {
     switch (action.index) {
       case 0:
-        NavigatorService.instance.getNavigator().jumpTo(NavigatorService.instance.screens[Routes.HOME])
-        break;
-      case 1:
         try{
           NavigatorService.instance.getNavigator().jumpTo(NavigatorService.instance.screens[Routes.ABOUT])
         } catch(e){
@@ -45,7 +42,7 @@ export class MyToolbar extends Component {
           onRightElementPress={this._onActionSelected}
           rightElement={{
 	          menu: {
-              labels: ['Início', 'Sobre']
+              labels: ['Sobre']
             }
           }}
         />
