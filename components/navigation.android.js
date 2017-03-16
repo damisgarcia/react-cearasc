@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  BackAndroid,
   StyleSheet,
   StatusBar,
   Navigator,
@@ -47,14 +48,30 @@ export class Navigation extends Component {
         { key: '3', title: 'Partidas' }
       ]
     }
+  }
 
-    YoutubeAPI.channel_videos(channelId, {part: 'snippet', order: 'date', maxResults: 8}).then((responseJson) => {
+  componentDidMount(){
+    YoutubeAPI.getVideos(channelId, {part: 'snippet', order: 'date', maxResults: 8}).then((responseJson) => {
       playlist = playlist.concat(responseJson.items);
       this.setState({playlist: playlist_ds.cloneWithRows(playlist)});
       console.log(this.state.playlist)
     })
+
+    BackAndroid.addEventListener('hardwareBackPress', this._handleBack);
   }
 
+
+  componentWillUnmount(){
+    BackAndroid.removeEventListener('hardwareBackPress', this._handleBack);    
+  }
+
+  _handleBack = () => {
+    if (NavigatorService.instance.getNavigator().getCurrentRoutes().length > 1) {
+      NavigatorService.instance.getNavigator().pop()
+      return true;
+    }
+    return false;
+  }
 
   _handleChangeTab = (index) => {
     this.setState({ index });

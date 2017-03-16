@@ -24,11 +24,7 @@ export class MyToolbar extends Component {
   _onActionSelected(action) {
     switch (action.index) {
       case 0:
-        try{
-          NavigatorService.instance.getNavigator().jumpTo(NavigatorService.instance.screens[Routes.ABOUT])
-        } catch(e){
-          NavigatorService.instance.getNavigator().push(NavigatorService.instance.screens[Routes.ABOUT])
-        }
+        NavigatorService.instance.getNavigator().push(NavigatorService.instance.screens[Routes.ABOUT])
         break;
       default:
     }
