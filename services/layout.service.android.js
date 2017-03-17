@@ -17,4 +17,7 @@ export class Layout extends Singleton{
   static getScreenWidth(){
     return Dimensions.get('window').width;
   }
+  static getScreenHeight(){
+    return Dimensions.get('window').height;
+  }
 }

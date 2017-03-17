@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
+  Image,
   Text,
+  ScrollView,
   View
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLOR, Card, Toolbar } from 'react-native-material-ui';
 
-import { API } from '../services/api.js';
+import { FacebookAPI } from '../services/facebookapi.js';
 import { Routes } from '../services/routes.js';
 import { Layout } from '../services/layout.service.android.js';
 import { NavigatorService } from '../services/navigator.service.android.js';
@@ -21,18 +23,22 @@ export class Post extends Component {
 
   _goPost(id){
     NavigatorService.instance.screens[Routes.POSTDETAIL].id = id
-    try{
-      NavigatorService.instance.getNavigator().jumpTo(NavigatorService.instance.screens[Routes.POSTDETAIL])
-    } catch(e){
-      NavigatorService.instance.getNavigator().push(NavigatorService.instance.screens[Routes.POSTDETAIL])
-    }
+    NavigatorService.instance.getNavigator().push(NavigatorService.instance.screens[Routes.POSTDETAIL])
   }
 
   render(){
+    let pic = null
+
+    if(this.props.data.picture){
+      pic = <View style={{flex: 1}}><Image style={styles.media} resizeMode='cover' source={{uri: this.props.data.full_picture}}/></View>
+    }
+
     return(
-      <Card style={{container: styles.container}} onPress={ ()=> this._goPost(this.props.data.id) }>
-        <Text style={styles.title}>{ this.props.data.title }</Text>
-        <Text style={styles.subtitle}>{ this.props.data.body }</Text>
+      <Card style={{container: styles.container}} onPress={ ()=> this._goPost(this.props.data.id)}>
+        {pic}
+        <View style={styles.card_content}>
+          <Text style={styles.message}>{ this.props.data.message }</Text>
+        </View>
       </Card>
     );
   }
@@ -40,8 +46,9 @@ export class Post extends Component {
 
 export class PostShow extends Component {
   state = {
-    title: '',
-    body: ''
+    message: '',
+    picture: '',
+    full_picture: ''
   }
 
   constructor(props){
@@ -55,28 +62,36 @@ export class PostShow extends Component {
 
   componentDidMount(){
     this.getPost().then((post)=>{
-      console.log(post)
-      this.setState({title: post.title, body: post.body})
+      this.setState({message: post.message, picture: post.picture, full_picture: post.full_picture})
     })
   }
 
   getPost(){
-    return fetch(API.post(this.props.data.id))
-      .then((response) => response.json())
+    return new FacebookAPI().getPagePost(this.props.data.id)
   }
 
   render(){
+    let pic = null
+
+    if(this.state.picture){
+      pic = <View style={{flex: 1}}><Image style={styles.media_lg} resizeMode='cover' source={{uri: this.state.full_picture}}/></View>
+    }
+
     return(
       <View style={{flex:1, backgroundColor: Layout.backgroundColor}}>
         <Toolbar
           leftElement="arrow-back"
           onLeftElementPress={this.goHome}
-          centerElement={this.state.title}
+          centerElement={this.state.message}
         />
-        <Card style={{container: styles.container}}>
-          <Text style={styles.title}>{this.state.title}</Text>
-          <Text style={styles.subtitle}>{this.state.body}</Text>
-        </Card>
+        <ScrollView>
+          <Card style={{container: styles.container}}>
+            {pic}
+            <View style={styles.card_content}>
+              <Text style={styles.message}>{ this.state.message }</Text>
+            </View>
+          </Card>
+        </ScrollView>
       </View>
     )
   }
@@ -87,7 +102,9 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 16,
     marginTop: 8,
-    marginBottom: 8,
+    marginBottom: 8
+  },
+  card_content:{
     padding: 16
   },
   title:{
@@ -96,6 +113,14 @@ const styles = StyleSheet.create({
   },
   subtitle:{
     fontSize: 20
+  },
+  media:{
+    flex: 1,
+    height: Layout.getScreenHeight() * 0.40
+  },
+  media_lg:{
+    flex: 1,
+    height: Layout.getScreenHeight() * 0.60
   }
 });
 

@@ -19,8 +19,14 @@ import { COLOR } from 'react-native-material-ui';
 import { API } from '../services/api.js';
 import { Post } from './post.android.js';
 
+import { FacebookAPI } from '../services/facebookapi.js';
+
 let ds = null;
 let posts = [];
+
+// FacebookAPI
+const fbPageId = "108933492467002"
+let fbNextURL = null
 
 export class Posts extends Component {
 
@@ -29,8 +35,6 @@ export class Posts extends Component {
     ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
-      page: 1,
-      perPage: 15,
       loading: false,
       refreshing: false,
       dataSource: ds.cloneWithRows(posts)
@@ -43,11 +47,8 @@ export class Posts extends Component {
 
   getPosts = async ()=>{
     this._getPosts().then((responseJson) => {
-      if(responseJson.length){
-        this.state.page++
-        this.setState({page: this.state.page})
-      }
-      posts = posts.concat(responseJson)
+      fbNextURL = responseJson.paging.next
+      posts = posts.concat(responseJson.data)
       this.setState({dataSource: ds.cloneWithRows(posts)})
       this.setState({loading: false})
     })
@@ -65,22 +66,19 @@ export class Posts extends Component {
 
   async _getPosts(){
     this.setState({loading: true})
-
-    return fetch(API.posts({_page: this.state.page, _limit: this.state.perPage}))
-          .then((response) => response.json())
+    return new FacebookAPI().getPagePosts(fbPageId, fbNextURL);
   }
 
   onRefresh(){
     this.setState({refreshing: true});
     this._getPosts().then((responseJson) => {
       if(responseJson.length){
-        this.state.page++
-        this.setState({page: this.state.page})
+        fbNextURL = responseJson.paging.next
       }
-      posts = responseJson
+      posts = posts.concat(responseJson.data)
       this.setState({dataSource: ds.cloneWithRows(posts)})
       this.setState({loading: false})
-      this.setState({refreshing: false});
+      this.setState({refreshing: false})
     })
     .catch((error) => {
       ToastAndroid.show("Não foi possível carregar conteúdo. Verifique sua conexão", ToastAndroid.BOTTOM);

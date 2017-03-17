@@ -28,8 +28,10 @@ import { PostShow } from './post.android.js';
 import { MyToolbar } from './mytoolbar.android.js';
 import { Routes } from '../services/routes.js';
 import { Layout } from '../services/layout.service.android.js';
+
 import { Youtube } from '../components/youtube.js';
 import { YoutubeAPI } from '../services/youtubeapi.js';
+
 import { NavigatorService } from '../services/navigator.service.android.js';
 
 let playlist = []
