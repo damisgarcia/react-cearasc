@@ -7,11 +7,10 @@ import {
   Text,
   ToastAndroid,
   ToolbarAndroid,
+  RefreshControl,
   ListView,
   View
 } from 'react-native';
-
-import TimerMixin from 'react-timer-mixin';
 
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
@@ -24,7 +23,6 @@ let ds = null;
 let posts = [];
 
 export class Posts extends Component {
-  mixins = [TimerMixin]
 
   constructor(props){
     super(props);
@@ -34,6 +32,7 @@ export class Posts extends Component {
       page: 1,
       perPage: 15,
       loading: false,
+      refreshing: false,
       dataSource: ds.cloneWithRows(posts)
     };
   }
@@ -71,6 +70,30 @@ export class Posts extends Component {
           .then((response) => response.json())
   }
 
+  onRefresh(){
+    this.setState({refreshing: true});
+    this._getPosts().then((responseJson) => {
+      if(responseJson.length){
+        this.state.page++
+        this.setState({page: this.state.page})
+      }
+      posts = responseJson
+      this.setState({dataSource: ds.cloneWithRows(posts)})
+      this.setState({loading: false})
+      this.setState({refreshing: false});
+    })
+    .catch((error) => {
+      ToastAndroid.show("Não foi possível carregar conteúdo. Verifique sua conexão", ToastAndroid.BOTTOM);
+      // Request Timeout
+      setTimeout(
+        () => {
+          this.setState({loading: false})
+        },
+        3000
+      );
+    });
+  }
+
   renderActivityIndicator(){
     return <ActivityIndicator animating={this.state.loading} style={styles.centering} color={COLOR.purple500} size="large"/>
   }
@@ -80,6 +103,12 @@ export class Posts extends Component {
       <View>
         <ListView
           enableEmptySections={true}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={()=> this.onRefresh()}
+            />
+          }
           renderScrollComponent={props => <InfiniteScrollView {...props} />}
           renderFooter={ ()=> this.renderActivityIndicator() }
           dataSource={this.state.dataSource}

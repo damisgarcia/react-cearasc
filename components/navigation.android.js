@@ -8,6 +8,7 @@ import {
   ListView,
   Text,
   Image,
+  RefreshControl,
   WebView,
   View
 } from 'react-native';
@@ -27,6 +28,7 @@ import { PostShow } from './post.android.js';
 import { MyToolbar } from './mytoolbar.android.js';
 import { Routes } from '../services/routes.js';
 import { Layout } from '../services/layout.service.android.js';
+import { Youtube } from '../components/youtube.js';
 import { YoutubeAPI } from '../services/youtubeapi.js';
 import { NavigatorService } from '../services/navigator.service.android.js';
 
@@ -41,6 +43,7 @@ export class Navigation extends Component {
 
     this.state = {
       index: 1,
+      refreshing: false,
       playlist: playlist_ds.cloneWithRows(playlist),
       routes: [
         { key: '1', title: 'TV' },
@@ -51,18 +54,13 @@ export class Navigation extends Component {
   }
 
   componentDidMount(){
-    YoutubeAPI.getVideos(channelId, {part: 'snippet', order: 'date', maxResults: 8}).then((responseJson) => {
-      playlist = playlist.concat(responseJson.items);
-      this.setState({playlist: playlist_ds.cloneWithRows(playlist)});
-      console.log(this.state.playlist)
-    })
-
     BackAndroid.addEventListener('hardwareBackPress', this._handleBack);
+    this._loadYTVideos(false)
   }
 
 
   componentWillUnmount(){
-    BackAndroid.removeEventListener('hardwareBackPress', this._handleBack);    
+    BackAndroid.removeEventListener('hardwareBackPress', this._handleBack);
   }
 
   _handleBack = () => {
@@ -84,6 +82,17 @@ export class Navigation extends Component {
   _transformURI = (videoId) => {
     return "https://www.youtube.com/embed/"+ videoId
   };
+
+  _loadYTVideos(refreshing){
+    if(refreshing)
+      this.setState({refreshing: true})
+
+    YoutubeAPI.getVideos(channelId, {part: 'snippet', order: 'date', maxResults: 25}).then((responseJson) => {
+      playlist = playlist.concat(responseJson.items);
+      this.setState({playlist: playlist_ds.cloneWithRows(playlist)});
+      this.setState({refreshing: false})
+    })
+  }
 
   _renderScene = (route, navigator)=>{
     NavigatorService.instance.setNavigator(navigator)
@@ -119,10 +128,16 @@ export class Navigation extends Component {
     case '1':
       return (
         <ListView
-        enableEmptySections={true}
-        automaticallyAdjustContentInsets={true}
-        dataSource={this.state.playlist}
-        renderRow={(video) => <WebView style={styles.youtube} source={{uri: this._transformURI(video.id.videoId) }} /> }
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={()=> this._loadYTVideos(true)}
+            />
+          }
+          enableEmptySections={true}
+          automaticallyAdjustContentInsets={true}
+          dataSource={this.state.playlist}
+          renderRow={(video) => <Youtube data={video} /> }
         />
       );
     case '2':
@@ -134,8 +149,8 @@ export class Navigation extends Component {
     }
   };
 
+  // renderRow={(video) => <WebView style={styles.youtube} source={{uri: this._transformURI(video.id.videoId) }} /> }
 
-  // renderRow={(video) => <WebView javaScriptEnabled={true} source={{uri:this._transformURI(video.id.videoId)}} /> }
 
   render(){
     return (
