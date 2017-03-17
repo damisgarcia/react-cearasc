@@ -61,7 +61,7 @@ export class PostShow extends Component {
   }
 
   componentDidMount(){
-    this.getPost().then((post)=>{
+    let post = this.getPost().then((post)=>{      
       this.setState({message: post.message, picture: post.picture, full_picture: post.full_picture})
     })
   }

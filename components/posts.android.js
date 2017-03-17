@@ -46,9 +46,9 @@ export class Posts extends Component {
   }
 
   getPosts = async ()=>{
-    this._getPosts().then((responseJson) => {
-      fbNextURL = responseJson.paging.next
-      posts = posts.concat(responseJson.data)
+    this._getPosts().then((response) => {
+      fbNextURL = response.paging.next
+      posts = posts.concat(response.data)
       this.setState({dataSource: ds.cloneWithRows(posts)})
       this.setState({loading: false})
     })
@@ -71,11 +71,11 @@ export class Posts extends Component {
 
   onRefresh(){
     this.setState({refreshing: true});
-    this._getPosts().then((responseJson) => {
-      if(responseJson.length){
-        fbNextURL = responseJson.paging.next
+    this._getPosts().then((response) => {
+      if(response.length){
+        fbNextURL = response.paging.next
       }
-      posts = posts.concat(responseJson.data)
+      posts = posts.concat(response.data)
       this.setState({dataSource: ds.cloneWithRows(posts)})
       this.setState({loading: false})
       this.setState({refreshing: false})

@@ -11,7 +11,7 @@ export class FacebookAPI{
   }
 
   // https://graph.facebook.com/{version}/{pageId}/posts
-  getPagePosts(pageId, nextURL){
+  async getPagePosts(pageId, nextURL){
     if(nextURL){
       uri = URI(nextURL)
     } else{
@@ -20,20 +20,29 @@ export class FacebookAPI{
       uri.addSearch({access_token: this.ACCESSTOKEN})
       uri.addSearch({fields: 'message, link, picture, full_picture'})
     }
-    return fetch(uri.toString())
-          .then((response) => response.json())
+
+    try{
+      let response = await fetch(uri.toString());
+      let responseJson = await response.json();
+      return responseJson
+    } catch(err){
+      console.log(error)
+    }
+
   }
 
-  getPagePost(postId){
+  async getPagePost(postId){
     let basepath = [this.HOST, this.VERSION, postId.toString()].join('/')
     uri = URI(basepath)
     uri.addSearch({access_token: this.ACCESSTOKEN})
     uri.addSearch({fields: 'message, link, picture, full_picture'})
-
-    console.log(uri.toString())
-
-    return fetch(uri.toString())
-          .then((response) => response.json())
+    try{
+      let response = await fetch(uri.toString())
+      let responseJson = await response.json();
+      return responseJson
+    } catch(err){
+      console.log(error)
+    }
   }
 }
 // accessToken
