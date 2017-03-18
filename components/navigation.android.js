@@ -20,9 +20,11 @@ import {
   TabBar
 } from 'react-native-tab-view';
 
+
 import { COLOR } from 'react-native-material-ui';
 
 import { About, Calendar } from './pages.android.js';
+import { AdMob } from './admob.android.js';
 import { Posts } from './posts.android.js';
 import { PostShow } from './post.android.js';
 import { MyToolbar } from './mytoolbar.android.js';
@@ -79,10 +81,6 @@ export class Navigation extends Component {
 
   _renderHeader = (props) => {
     return <TabBar style={styles.bar} pressColor="#333" labelStyle={styles.tablabel} indicatorStyle={styles.indicator} {...props} />;
-  };
-
-  _transformURI = (videoId) => {
-    return "https://www.youtube.com/embed/"+ videoId
   };
 
   _loadYTVideos(refreshing){
@@ -151,13 +149,11 @@ export class Navigation extends Component {
     }
   };
 
-  // renderRow={(video) => <WebView style={styles.youtube} source={{uri: this._transformURI(video.id.videoId) }} /> }
-
-
   render(){
     return (
       <View style={styles.container}>
         <Navigator initialRoute={NavigatorService.instance.screens[Routes.HOME]} renderScene={this._renderScene}/>
+        <AdMob></AdMob>
       </View>
     );
   };
