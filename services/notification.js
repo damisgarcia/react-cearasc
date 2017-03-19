@@ -1,6 +1,6 @@
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
-class Notification {
+export class Notification {
   constructor() {
     FCM.requestPermissions(); // for iOS
     FCM.getFCMToken().then(token => {

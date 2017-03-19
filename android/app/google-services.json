@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "285276075774",
+    "firebase_url": "https://meutime-26aa0.firebaseio.com",
+    "project_id": "meutime-26aa0",
+    "storage_bucket": "meutime-26aa0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285276075774:android:8782b49ad9b78a26",
+        "android_client_info": {
+          "package_name": "com.react_cearasc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285276075774-08ifeool46be2ammopdmet8noq0bst4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4vxIiqe1XlnNy7InQZm-RWm3V6IYCJhU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
