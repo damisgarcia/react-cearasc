@@ -11,12 +11,27 @@ import {
 } from 'react-native';
 
 import { COLOR, ThemeProvider } from 'react-native-material-ui';
+import { Notification } from './services/notification';
 
 import {
   Navigation
 } from './components/navigation.android.js';
 
+
 export default class react_cearasc extends Component {
+  constructor(){
+    super();
+    this.notification = null
+  }
+
+  componentDidMount(){
+    this.notification = new Notification()
+  }
+
+  componentWillUnmount(){
+    this.notification.destroy()
+  }
+
   render() {
     return (
       <ThemeProvider uiTheme={uiTheme}>
