@@ -16,6 +16,7 @@ export class AdMob extends Component {
 
     setTimeout(
       ()=> this.showRewarded()
+      , 1000
     )
 
     AdMobRewarded.requestAd((error) => error && console.log(error));

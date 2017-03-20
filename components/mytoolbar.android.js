@@ -22,9 +22,18 @@ export class MyToolbar extends Component {
     super(props);
   }
 
-  _onActionSelected(action) {
-    switch (action.index) {
-      case 0:
+  _onActionSelected(response) {
+    if(response.action === 'menu') {
+      switch (response.index) {
+        case 0:
+          NavigatorService.instance.getNavigator().push(NavigatorService.instance.screens[Routes.ABOUT])
+        break;
+        default:
+      }
+    }
+
+    switch (response.action) {
+      case 'share':
         Share.share({
           message: 'https://play.google.com/store/apps/details?id=br.com.ceara.soumais&hl=pt_BR',
           url: 'https://play.google.com/store/apps/details?id=br.com.ceara.soumais&hl=pt_BR',
@@ -36,9 +45,6 @@ export class MyToolbar extends Component {
           ],
           tintColor: 'green'
         })
-        break;
-      case 1:
-        NavigatorService.instance.getNavigator().push(NavigatorService.instance.screens[Routes.ABOUT])
         break;
       default:
     }
