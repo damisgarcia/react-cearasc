@@ -46,7 +46,7 @@ export class Posts extends Component {
   }
 
   getPosts = async ()=>{
-    this._getPosts().then((response) => {
+    this._getPosts().then((response) => {      
       fbNextURL = response.paging.next
       posts = posts.concat(response.data)
       this.setState({dataSource: ds.cloneWithRows(posts)})
