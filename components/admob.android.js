@@ -9,11 +9,14 @@ import {
 
 import { AdMobRewarded, AdMobBanner, PublisherBanner} from 'react-native-admob';
 
+const intervect_banner = 'ca-app-pub-2384745023579151/3689331027'
+const small_banner = 'ca-app-pub-2384745023579151/2212597824'
+
 export class AdMob extends Component {
 
   componentWillMount(){
     AdMobRewarded.setTestDeviceID('EMULATOR');
-    AdMobRewarded.setAdUnitID('ca-app-pub-3940256099942544/1033173712');
+    AdMobRewarded.setAdUnitID(intervect_banner);
   }
 
   componentDidMount() {
@@ -32,6 +35,10 @@ export class AdMob extends Component {
     });
   }
 
+  bannerError(error){
+    console.log(error)
+  }
+
   requestAd(){
     if(!this.props.showAd){
       return false
@@ -48,7 +55,7 @@ export class AdMob extends Component {
       <View style={styles.container}>
         <AdMobBanner
            bannerSize="banner"
-           adUnitID="ca-app-pub-3940256099942544/6300978111"
+           adUnitID="ca-app-pub-2384745023579151/2212597824"
            testDeviceID="EMULATOR"
            didFailToReceiveAdWithError={this.bannerError} />
       </View>
