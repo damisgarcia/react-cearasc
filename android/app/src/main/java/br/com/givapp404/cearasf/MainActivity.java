@@ -1,4 +1,4 @@
-package com.react_cearasc;
+package br.com.givapp404.cearasf;
 
 import com.facebook.react.ReactActivity;
 
