@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
   Text,
+  Share,
   ScrollView,
   View
 } from 'react-native';
@@ -48,7 +49,8 @@ export class PostShow extends Component {
   state = {
     message: '',
     picture: '',
-    full_picture: ''
+    full_picture: '',
+    link: ''
   }
 
   constructor(props){
@@ -60,9 +62,23 @@ export class PostShow extends Component {
     NavigatorService.instance.getNavigator().pop()
   }
 
+  sharePost(){
+    Share.share({
+      message: this.state.link,
+      url: this.state.link,
+      title: this.state.message
+    }, {
+      dialogTitle: 'Compartilhar Post Ceará Esporte Fã',
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter'
+      ],
+      tintColor: 'green'
+    })
+  }
+
   componentDidMount(){
-    let post = this.getPost().then((post)=>{      
-      this.setState({message: post.message, picture: post.picture, full_picture: post.full_picture})
+    this.getPost().then((post)=>{
+      this.setState({message: post.message, picture: post.picture, full_picture: post.full_picture, link: post.link})
     })
   }
 
@@ -81,7 +97,9 @@ export class PostShow extends Component {
       <View style={{flex:1, backgroundColor: Layout.backgroundColor}}>
         <Toolbar
           leftElement="arrow-back"
+          rightElement="share"
           onLeftElementPress={this.goHome}
+          onRightElementPress={()=> this.sharePost()}
           centerElement={this.state.message}
         />
         <ScrollView>

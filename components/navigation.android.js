@@ -111,12 +111,18 @@ export class Navigation extends Component {
               renderHeader={this._renderHeader}
               onRequestChangeTab={this._handleChangeTab}
             />
+            <AdMob showAd={true}></AdMob>
           </View>
         );
       case 2:
         return <About/>
       case 3:
-        return <PostShow data={route}/>
+        return (
+          <View style={styles.container}>
+            <PostShow data={route}/>
+            <AdMob showAd={false}></AdMob>
+          </View>
+        )
       default:
         return null;
       }
@@ -153,7 +159,6 @@ export class Navigation extends Component {
     return (
       <View style={styles.container}>
         <Navigator initialRoute={NavigatorService.instance.screens[Routes.HOME]} renderScene={this._renderScene}/>
-        <AdMob></AdMob>
       </View>
     );
   };

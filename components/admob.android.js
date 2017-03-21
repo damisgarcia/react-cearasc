@@ -10,16 +10,14 @@ import {
 import { AdMobRewarded, AdMobBanner, PublisherBanner} from 'react-native-admob';
 
 export class AdMob extends Component {
-  componentDidMount() {
+
+  componentWillMount(){
     AdMobRewarded.setTestDeviceID('EMULATOR');
     AdMobRewarded.setAdUnitID('ca-app-pub-3940256099942544/1033173712');
+  }
 
-    setTimeout(
-      ()=> this.showRewarded()
-      , 1000
-    )
-
-    AdMobRewarded.requestAd((error) => error && console.log(error));
+  componentDidMount() {
+    this.requestAd()
   }
 
   componentWillUnmount() {
@@ -27,11 +25,22 @@ export class AdMob extends Component {
   }
 
   showRewarded() {
-    AdMobRewarded.showAd((error) => error && console.log(error));
+    AdMobRewarded.showAd((error) => {
+      if(error && error == "Ad is not ready."){
+        setTimeout( ()=> this.showRewarded(), 300)
+      }
+    });
   }
 
-  bannerError(error){
-    console.log(error)
+  requestAd(){
+    if(!this.props.showAd){
+      return false
+    }
+
+    AdMobRewarded.requestAd((error) => {
+      error && this.showRewarded()
+    });
+    this.showRewarded()
   }
 
   render() {
