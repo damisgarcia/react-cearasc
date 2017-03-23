@@ -8,9 +8,40 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:285276075774:android:8782b49ad9b78a26",
+        "mobilesdk_app_id": "1:285276075774:android:05f0d0c82da6988c",
         "android_client_info": {
-          "package_name": "br.com.givapp404.cearasf"
+          "package_name": "br.com.giveapp.cearaesportefan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285276075774-08ifeool46be2ammopdmet8noq0bst4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4vxIiqe1XlnNy7InQZm-RWm3V6IYCJhU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285276075774:android:2d1208b262bfe779",
+        "android_client_info": {
+          "package_name": "br.com.givapp404.cearaesportefan"
         }
       },
       "oauth_client": [

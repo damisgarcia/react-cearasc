@@ -1,4 +1,4 @@
-package br.com.givapp404.cearasf;
+package br.com.givapp404.cearaesportefan;
 
 import android.app.Application;
 

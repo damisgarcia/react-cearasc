@@ -87,7 +87,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "br.com.givapp404.cearasf"
+        applicationId "br.com.givapp404.cearaesportefan"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
