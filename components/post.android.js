@@ -68,7 +68,7 @@ export class PostShow extends Component {
       url: this.state.link,
       title: this.state.message
     }, {
-      dialogTitle: 'Compartilhar Post Ceará Esporte Fã',
+      dialogTitle: 'Compartilhar Post Ceará Esporte Fan',
       excludedActivityTypes: [
         'com.apple.UIKit.activity.PostToTwitter'
       ],

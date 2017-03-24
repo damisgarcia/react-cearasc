@@ -5,8 +5,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@raw/ic_launcher"
-            android:width="150px"
-            android:height="207px"/>
+            android:src="@raw/ic_launcher"/>
     </item>
 </layer-list>

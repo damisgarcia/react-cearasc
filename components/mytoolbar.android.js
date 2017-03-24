@@ -35,11 +35,11 @@ export class MyToolbar extends Component {
     switch (response.action) {
       case 'share':
         Share.share({
-          message: 'https://play.google.com/store/apps/details?id=br.com.ceara.soumais&hl=pt_BR',
-          url: 'https://play.google.com/store/apps/details?id=br.com.ceara.soumais&hl=pt_BR',
-          title: 'Compartilhar Ceará Esporte Fã'
+          message: 'https://play.google.com/store/apps/details?id=br.com.givapp404.cearaesportefan',
+          url: 'https://play.google.com/store/apps/details?id=br.com.givapp404.cearaesportefan',
+          title: 'Compartilhar Ceará Esporte Fan'
         }, {
-          dialogTitle: 'Compartilhar Ceará Esporte Fã',
+          dialogTitle: 'Compartilhar Ceará Esporte Fan',
           excludedActivityTypes: [
             'com.apple.UIKit.activity.PostToTwitter'
           ],
@@ -54,7 +54,7 @@ export class MyToolbar extends Component {
     return (
       <View style={styles.toolbar}>
          <Toolbar
-          centerElement="Ceará Esporte Fã"
+          centerElement="Ceará Esporte Fan"
           onRightElementPress={this._onActionSelected}
           rightElement={{
             actions:['share'],
