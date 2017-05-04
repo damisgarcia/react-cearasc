@@ -19,7 +19,7 @@ import { NavigatorService } from '../services/navigator.service.android.js';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { COLOR, Toolbar } from 'react-native-material-ui';
+import { COLOR, Toolbar, Button } from 'react-native-material-ui';
 
 const hine = null
 
@@ -73,11 +73,45 @@ export class About extends Component {
   }
 }
 
-const uri = 'https://esporte.uol.com.br/futebol/times/ceara/proximos-jogos/'
+export class Matches extends Component{
+  state = {
+    results: true,
+    calendar: false
+  }
+  render(){
+    return(
+      <View style={{flex: 1}}>
+        { this._renderMatches() }
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Button text="Resultados" accent={this.state.results} onPress={ _=> this._toTabResults() }/>
+          <Button text="Próximos Jogos" accent={this.state.calendar} onPress={ _=> this._toTabCalendar() }/>
+        </View>
+      </View>
+    );
+  }
+
+  _renderMatches(){
+    if(this.state.results){
+      return <Results />;
+    } else if(this.state.calendar){
+      return <Calendar/>;
+    }
+  }
+
+  _toTabResults(){
+    this.setState({results: true, calendar: false})
+  }
+
+  _toTabCalendar(){
+    this.setState({results: false, calendar: true})
+  }
+}
+
 
 export class Calendar extends Component{
+  uri = 'https://esporte.uol.com.br/futebol/times/ceara/proximos-jogos/'
   onNavigationStateChange(event){
-    if (event.url !== uri) {
+    if (event.url !== this.uri) {
       this.webview.stopLoading();
     }
   }
@@ -86,8 +120,30 @@ export class Calendar extends Component{
     return(
       <WebView
         ref={(ref) => { this.webview = ref; }}
-        source={{uri: uri}}
+        source={{uri: this.uri}}
         javaScriptEnabled={false}
+        style={{marginBottom: -50}}
+        onNavigationStateChange={ (event)=> this.onNavigationStateChange(event) } />
+    );
+  }
+}
+
+export class Results extends Component{
+  uri = 'https://esporte.uol.com.br/futebol/times/ceara/resultados/'
+  onNavigationStateChange(event){
+    if (event.url !== this.uri) {
+      this.webview.stopLoading();
+    }
+  }
+
+  render(){
+    return(
+      <WebView
+        ref={(ref) => { this.webview = ref; }}
+        source={{uri: this.uri}}
+        javaScriptEnabled={false}
+        style={{marginBottom: -50}}
+        scalesPageToFit={true}
         onNavigationStateChange={ (event)=> this.onNavigationStateChange(event) } />
     );
   }

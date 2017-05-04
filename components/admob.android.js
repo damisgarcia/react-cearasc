@@ -66,8 +66,7 @@ export class AdMob extends Component {
 const styles = StyleSheet.create({
   container: {
     marginTop: (Platform.OS === 'ios') ? 30 : 10,
-    flex: 1,
-    maxHeight: 50,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center'
   }

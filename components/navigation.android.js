@@ -23,7 +23,7 @@ import {
 
 import { COLOR } from 'react-native-material-ui';
 
-import { About, Calendar } from './pages.android.js';
+import { About, Matches } from './pages.android.js';
 import { AdMob } from './admob.android.js';
 import { Posts } from './posts.android.js';
 import { PostShow } from './post.android.js';
@@ -149,7 +149,7 @@ export class Navigation extends Component {
     case '2':
       return <Posts style={[ styles.page, { backgroundColor: '#ff4081' } ]} />;
     case '3':
-      return <Calendar style={styles.page} />;
+      return <Matches style={styles.page} />;
     default:
       return null;
     }
