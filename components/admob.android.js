@@ -28,11 +28,11 @@ export class AdMob extends Component {
   }
 
   showRewarded() {
-    AdMobRewarded.showAd((error) => {
-      if(error && error == "Ad is not ready."){
-        setTimeout( ()=> this.showRewarded(), 300)
-      }
-    });
+    // AdMobRewarded.showAd((error) => {
+    //   if(error && error == "Ad is not ready."){
+    //     setTimeout( ()=> this.showRewarded(), 300)
+    //   }
+    // });
   }
 
   bannerError(error){
@@ -47,7 +47,6 @@ export class AdMob extends Component {
     AdMobRewarded.requestAd((error) => {
       error && this.showRewarded()
     });
-    this.showRewarded()
   }
 
   render() {

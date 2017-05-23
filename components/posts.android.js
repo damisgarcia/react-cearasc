@@ -34,6 +34,8 @@ export class Posts extends Component {
     super(props);
     ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
+    this.FacebookAPI = new FacebookAPI()
+
     this.state = {
       loading: false,
       refreshing: false,
@@ -46,7 +48,7 @@ export class Posts extends Component {
   }
 
   getPosts = async ()=>{
-    this._getPosts().then((response) => {      
+    this._getPosts().then((response) => {
       fbNextURL = response.paging.next
       posts = posts.concat(response.data)
       this.setState({dataSource: ds.cloneWithRows(posts)})
@@ -66,7 +68,7 @@ export class Posts extends Component {
 
   async _getPosts(){
     this.setState({loading: true})
-    return new FacebookAPI().getPagePosts(fbPageId, fbNextURL);
+    return this.FacebookAPI.getPagePosts(fbPageId, fbNextURL);
   }
 
   onRefresh(){
